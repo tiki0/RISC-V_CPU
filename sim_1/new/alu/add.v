@@ -13,11 +13,11 @@ module add32_r (
     input [31:0] a,
     input [31:0] b,
     input cin,
-    output sum[31:0],
+    output [31:0]sum,
     output cout
 );
   wire [31:0] carry;
-  fadd init (
+  fadd init1 (
       .a(a[0]),
       .b(b[0]),
       .cin(cin),
@@ -27,7 +27,7 @@ module add32_r (
   genvar i;
   generate
     for (i = 1; i < 32; i = i + 1) begin : g_add
-      fadd init (
+      fadd init2 (
           .a(a[i]),
           .b(b[i]),
           .cin(carry[i-1]),
