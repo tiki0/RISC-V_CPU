@@ -47,24 +47,24 @@ module decoder (
                         mem_write = 1'b0;
                     end // slt
                     3'b011: begin // sltu
-                        alu_op = 4'b0011;
+                        alu_op = 4'b0100;
                         reg_write = 1'b1;
                         mem_write = 1'b0;
                     end // sltu
                     3'b100: begin // xor
-                        alu_op = 4'b0100;
+                        alu_op = 4'b0101;
                         reg_write = 1'b1;
                         mem_write = 1'b0;
                     end // xor
                     3'b101: begin // srl or sra
                         case (funct7)
                             7'b0000000: begin // srl   
-                                alu_op = 4'b0101;
+                                alu_op = 4'b0110;
                                 reg_write = 1'b1;
                                 mem_write = 1'b0;
                             end //srl
                             7'b0100000: begin // sra
-                                alu_op = 4'b0110;
+                                alu_op = 4'b0111;
                                 reg_write = 1'b1;
                                 mem_write = 1'b0;
                             end // sra
@@ -73,12 +73,12 @@ module decoder (
                         endcase
                     end // srl or sra
                     3'b110: begin // or
-                        alu_op = 4'b0110;
+                        alu_op = 4'b1000;
                         reg_write = 1'b1;
                         mem_write = 1'b0;
                     end // or
                     3'b111: begin // and
-                        alu_op = 4'b0111;
+                        alu_op = 4'b1001;
                         reg_write = 1'b1;
                         mem_write = 1'b0;
                     end // and

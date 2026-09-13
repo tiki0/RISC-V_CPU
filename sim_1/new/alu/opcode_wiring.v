@@ -30,32 +30,69 @@ module opcode_wiring(
         .out(sll_out)
     );
 
+    reg [31:0] srl_out;
+    shift_r srl(
+        .a(a),
+        .n(b),
+        .is_s(1'b0),
+        .out(srl_out)
+    );
+
+    reg [31:0] sra_out;
+    shift_r sra(
+        .a(a),
+        .n(b),
+        .is_s(1'b1),
+        .out(sra_out)
+    );
+
+    reg [31:0] slt_out = {32'b0};
+    lessthan slt (
+        .a(a),
+        .b(b),
+        .signd(1'b1),
+        .lt(slt_out[0])
+    );
+
+    reg [31:0] sltu_out = {32'b0};
+    lessthan sltu (
+        .a(a),
+        .b(b),
+        .signd(1'b0),
+        .lt(sltu_out[0])
+    );
 
     always @(*) begin
         case (alu_op) 
-            4'b0000: begin
+            4'b0000: begin // add
                 out = add_out;
             end
-            4'b0001: begin
+            4'b0001: begin //sub
                 out = sub_out;
             end
-            4'b0010: begin
+            4'b0010: begin // shift left
                 out = sll_out;
             end
-            4'b0011: begin
+            4'b0011: begin //  set less than
+                out = slt_out;
             end
-            4'b0100: begin
+            4'b0100: begin // set less than unsigned
+                out = sltu_out;
+            end
+            4'b0101: begin // xor
                 out = a ^ b;
             end
-            4'b0101: begin
+            4'b0110: begin // shift right logical
+                out = srl_out;
             end
-            4'b0110: begin
+            4'b0111: begin // shift left arithmetic
+                out = sra_out;
             end
-            4'b0111: begin
+            4'b1000: begin // or
+                out = a | b;
             end
-            4'b1000: begin
-            end
-            4'b1001: begin
+            4'b1001: begin // and
+                out = a & b;
             end
             4'b1010: begin
             end
