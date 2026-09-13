@@ -10,7 +10,7 @@ module core(
     wire [31:0] wdata;
     wire [31:0] rd1;
     wire [31:0] rd2;
-    wire [3:0] alu_op;
+    wire [3:0]  alu_op;
     reg  [31:0] instr;
     wire [31:0] rdout;
     wire [31:0] wdin;
@@ -47,7 +47,7 @@ module core(
         .out(wdata)
     );
 
-    bram ram(
+    bram instruction_ram(
         .clk(clk),
         .we(1'b0),
         .addr(pc),

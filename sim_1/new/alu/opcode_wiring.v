@@ -85,7 +85,7 @@ module opcode_wiring(
             4'b0110: begin // shift right logical
                 out = srl_out;
             end
-            4'b0111: begin // shift left arithmetic
+            4'b0111: begin // shift right arithmetic
                 out = sra_out;
             end
             4'b1000: begin // or
