@@ -7,10 +7,12 @@ module decoder (
     output reg          reg_write,  // Reg write flag
     output reg          mem_write,  // Mem write flag
     output [31:0]       imm,        // For immediate ops
-    output              alu_src,     // Flag to fetch from imm or reg
+    output              alu_src,    // Flag to fetch from imm or reg
     output              mem_read,   // Read from memory
     output [3:0]        byte_en,
-    output              ext         // Extend with 0 or sign
+    output              ext,        // Extend with 0 or sign
+    output              load,       // Load group flag
+    output              jalr        // Special instruction needs flag
 );
 
     assign      rd      = instr[11:7];
@@ -19,13 +21,15 @@ module decoder (
     wire [6:0]  opcode  = instr[6:0];
     wire [2:0]  funct3  = instr[14:12];
     wire [6:0]  funct7  = instr[31:25];
-    assign      imm = {{20{instr[31]}}, instr[31:20]};
+    assign      imm     = {{20{instr[31]}}, instr[31:20]};
+    assign      jalr    = opcode == 7'b1100111; // Needy instruction eh?
 
+    
 
     always @(*) begin
         case (opcode)
             7'b0110011: begin // R-Type
-                alu_src = 0;
+                alu_src = 1'b0;
                 case (funct3)
                     3'b000: begin // add or sub
                         case (funct7)
